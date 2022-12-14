@@ -11,6 +11,7 @@ from django.utils.decorators import method_decorator
 class ProductView(View):
     context_data = {}
     def get(self,request):
+        cartitem = 0
         lower_data = Product.objects.filter(category = "B")
         top_data = Product.objects.filter(category = "T")
         mobile_data = Product.objects.filter(category = "M")
@@ -23,6 +24,7 @@ class ProductView(View):
 class ProductDetailView(View):
     context_data = {}
     def get(self, request, pk):
+        cartitem = 0
         product = Product.objects.get(id = pk)
         if request.user.is_authenticated:
             cartitem = len(Cart.objects.filter(user = request.user))
@@ -77,6 +79,7 @@ def edit_product(request):
 
 def show_to_cart(request):
     user = request.user
+    cartitem = 0
     if request.user.is_authenticated:
         cartitem = len(Cart.objects.filter(user = request.user))
         
@@ -99,6 +102,7 @@ def buy_now(request):
 @method_decorator(login_required,name='dispatch')
 class ProfileView(View):
     def get(self,request):
+        cartitem = 0
         form = CustomerProfileForm()
         if request.user.is_authenticated:
             cartitem = len(Cart.objects.filter(user = request.user))
@@ -107,6 +111,7 @@ class ProfileView(View):
         return render(request, 'app/profile.html',context_data)
 
     def post(self,request):
+        cartitem = 0
         form = CustomerProfileForm(request.POST)
         if request.user.is_authenticated:
             cartitem = len(Cart.objects.filter(user = request.user))
@@ -126,11 +131,12 @@ def address(request):
 
 @login_required
 def orders(request):
+    cartitem = 0
     user = request.user
     order_place = OrderPlace.objects.filter(user = user)
     if request.user.is_authenticated:
         cartitem = len(Cart.objects.filter(user = request.user))
-        
+    messages.info(request,"Order is Placed Status you can show below")
     context_data = {"order_place":order_place,"cartitem":cartitem}
     return render(request, 'app/orders.html',context_data)
 
@@ -138,6 +144,7 @@ def change_password(request):
  return render(request, 'app/change_password.html')
 
 def all_product(request,data = None):
+    cartitem = 0
     product = Product.objects.filter(category = data)
     brand = product.values('brand').distinct()
     if request.user.is_authenticated:
@@ -147,6 +154,7 @@ def all_product(request,data = None):
     return render(request, 'app/mobile.html',context_data)
 
 def mobile(request,category,data=None):
+    cartitem = 0
     if data == "None":
         product = Product.objects.filter(category = category)
         brand = product.values('brand').distinct()
@@ -179,6 +187,7 @@ class UserRegistration(View):
 
 def checkout(request):
     user = request.user
+    cartitem = 0
     cartitem = len(Cart.objects.filter(user=user))
     address = Customer.objects.filter(user=user)
     if(not address):
