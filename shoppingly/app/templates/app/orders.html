@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome {{request.user}}</h3>
+    {% for i in order_place%}
+   <div class="row">
+    <div class="container my-3">
+        <div class="row">
+         <div class="col-sm-6 text-center align-self-center">  
+          <img src="{{ i.product.product_image.url}}" alt="" class="img-fluid img-thumbnail">
+         </div>
+         <div class="col-sm-5 offset-sm-1">
+            <h5>Status: {{i.status}}</h5>
+            <hr>
+            <p>Product Title: {{i.product.title}}</p>
+          <p>Product Description: {{i.product.discription}}</p>
+          <h4>Rs. {{ i.product.discount_price}} || Quantity {{ i.quantity}}</h4> 
+ 
+         </div> 
+        </div>
+       </div>
+    </div>
+   {% endfor %}
+ </div>
+</div>
+{% endblock main-content %}
