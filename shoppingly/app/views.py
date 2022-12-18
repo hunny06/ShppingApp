@@ -31,6 +31,7 @@ class ProductDetailView(View):
         self.context_data = {"product":product,"cartitem":cartitem}
         return render(request, 'app/productdetail.html',self.context_data)
 
+@login_required
 def add_to_cart(request):
     if(request.GET.get('prod_id')):
         user = request.user
@@ -184,7 +185,8 @@ class UserRegistration(View):
             form.save()
         self.context_data = {"form":form}
         return render(request, 'app/customer_registration.html',self.context_data)
-
+        
+@login_required
 def checkout(request):
     user = request.user
     cartitem = 0
