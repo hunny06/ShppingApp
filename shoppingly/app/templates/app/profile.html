@@ -13,13 +13,14 @@
   </div>
   
   <div class="col-sm-8 offset-sm-1">
-   <form action="" method="post">
+   <form action="" method="post" style="display:flex; align-items:center; flex-direction:column;">
     {% csrf_token %}
     {% for fm in form %}
-      <div class="form-group col-lg-6 mb-3">
-         {{fm.label_tag}}{{fm}}<small class="text-danger">{{fm.errors|striptags}}</small>
-      </div>
+         
+         {{fm.label_tag}} <div style="border:1px solid black; box-shadow:0px 2px 6px 0px; border-radius:5px;">{{fm}}</div><small class="text-danger">{{fm.errors|striptags}}</small>
+         
       {% endfor %}
+      <br>
      <input type="submit" value="submit" class="btn btn-primary">
      {% if messages %}
          {% for message in messages %}

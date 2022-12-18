@@ -34,9 +34,9 @@ class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ["name","locality","city","zipcode","state"]
-        widget = {"name":forms.TextInput(attrs={"class":'form-control'}),
-        "locality":forms.TextInput(attrs={"class":"form-control"}),
-        "city":forms.TextInput(attrs={"class":"form-control"}),
-        "zipcode":forms.NumberInput(attrs={"class":"form-control"}),
-        "state":forms.Select(attrs={"class":"form-control"}),
+        widget = {"name":forms.TextInput(attrs={"class":'form-control',"placeholder":"Name"}),
+        "locality":forms.TextInput(attrs={"class":"form-control","placeholder":"Locality"}),
+        "city":forms.TextInput(attrs={"class":"form-control","placeholder":"City"}),
+        "zipcode":forms.NumberInput(attrs={"class":"form-control","placeholder":"ZipCode"}),
+        "state":forms.Select(attrs={"class":"form-control","placeholder":"State"}),
         }
